@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Signal Digest — 2026-10-15</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --panel: #171a21;
+    --border: #262b36;
+    --text: #e6e8ec;
+    --muted: #9aa2b1;
+    --accent: #7dd3fc;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+  }
+  .layout { display: flex; max-width: 1080px; margin: 0 auto; }
+  nav.toc {
+    width: 220px; flex-shrink: 0; padding: 40px 16px 40px 20px;
+    position: sticky; top: 0; align-self: flex-start; height: 100vh; overflow-y: auto;
+  }
+  nav.toc h4 { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin: 0 0 10px; }
+  nav.toc ul { list-style: none; margin: 0 0 20px; padding: 0; }
+  nav.toc li { margin-bottom: 6px; }
+  nav.toc a { color: var(--muted); text-decoration: none; font-size: 0.84rem; }
+  nav.toc a:hover { color: var(--accent); }
+  nav.toc .cat-link { color: var(--text); font-weight: 600; }
+  main { flex: 1; padding: 40px 20px 60px; min-width: 0; }
+  header h1 { font-size: 1.6rem; margin: 0 0 4px; }
+  header .sub { color: var(--muted); font-size: 0.9rem; }
+
+  .sources-note {
+    margin: 20px 0 36px; padding: 14px 16px; background: var(--panel);
+    border: 1px solid var(--border); border-radius: 10px; font-size: 0.82rem; color: var(--muted);
+  }
+  .sources-note strong { color: var(--text); font-weight: 600; }
+  .sources-note .row { margin-top: 4px; }
+  .sources-note a { color: var(--muted); }
+  .sources-note a:hover { color: var(--accent); }
+
+  section.category { margin-bottom: 40px; scroll-margin-top: 20px; }
+  section.category h2 {
+    font-size: 1.05rem; text-transform: uppercase; letter-spacing: 0.04em;
+    color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 8px;
+  }
+  article.item { padding: 16px 0; border-bottom: 1px solid var(--border); scroll-margin-top: 20px; }
+  article.item:last-child { border-bottom: none; }
+  article.item h3 { margin: 0 0 6px; font-size: 1.02rem; }
+  article.item h3 a { color: var(--text); text-decoration: none; }
+  article.item h3 a:hover { color: var(--accent); }
+  article.item .meta { font-size: 0.78rem; color: var(--muted); margin-bottom: 8px; }
+  article.item .meta a { color: var(--muted); }
+  article.item .meta a:hover { color: var(--accent); }
+  article.item p.why { margin: 0 0 10px; font-size: 0.94rem; color: var(--muted); font-style: italic; }
+  details.takeaways { margin-top: 6px; }
+  details.takeaways summary {
+    cursor: pointer; font-size: 0.86rem; color: var(--accent); list-style: none;
+  }
+  details.takeaways summary::before { content: "▸ "; }
+  details.takeaways[open] summary::before { content: "▾ "; }
+  details.takeaways ul { margin: 8px 0 0; padding-left: 20px; font-size: 0.92rem; }
+  details.takeaways li { margin-bottom: 6px; }
+  .empty-note { color: var(--muted); font-size: 0.88rem; font-style: italic; }
+  footer {
+    margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--border);
+    font-size: 0.76rem; color: var(--muted);
+  }
+
+  /* --- Mobile: TOC becomes an off-canvas panel behind a hamburger button --- */
+  .hamburger {
+    display: none;
+    position: fixed; top: 14px; left: 14px; z-index: 50;
+    width: 40px; height: 40px; border-radius: 8px;
+    background: var(--panel); border: 1px solid var(--border);
+    color: var(--text); font-size: 1.1rem; line-height: 1;
+    align-items: center; justify-content: center;
+  }
+  .toc-overlay {
+    display: none;
+    position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 39;
+  }
+  @media (max-width: 768px) {
+    .hamburger { display: flex; }
+    nav.toc {
+      position: fixed; top: 0; left: 0; height: 100vh; width: 260px;
+      background: var(--bg); border-right: 1px solid var(--border);
+      padding: 70px 16px 20px 20px; z-index: 40;
+      transform: translateX(-100%); transition: transform 0.2s ease;
+    }
+    body.toc-open nav.toc { transform: translateX(0); }
+    body.toc-open .toc-overlay { display: block; }
+    main { padding-top: 64px; }
+  }
+</style>
+</head>
+<body>
+
+<button class="hamburger" id="tocToggle" aria-label="Toggle table of contents">☰</button>
+<div class="toc-overlay" id="tocOverlay"></div>
+
+<div class="layout">
+
+<nav class="toc" id="toc">
+  <h4>Contents</h4>
+  
+  <ul>
+    <li><a class="cat-link" href="#eng">Engineering & Infrastructure</a></li>
+    
+    <li><a href="#eng-1">How Anthropic's Dynamic Workflows Coordi…</a></li>
+    
+    <li><a href="#eng-2">Crossing the Threshold: How OpenAI and A…</a></li>
+    
+    <li><a href="#eng-3">Building AI for Reliable Execution: Less…</a></li>
+    
+  </ul>
+  
+  <ul>
+    <li><a class="cat-link" href="#research">Research & ML Architecture</a></li>
+    
+    <li><a href="#research-1">Why AlphaFold Didn't Solve Protein Foldi…</a></li>
+    
+    <li><a href="#research-2">Lab-in-the-Loop at Compute Speed — Ian Q…</a></li>
+    
+    <li><a href="#research-3">Dyna-2: General Purpose Physical Agents …</a></li>
+    
+    <li><a href="#research-4">Synthesis Superintelligence: from Semico…</a></li>
+    
+    <li><a href="#research-5">I expect rapid progress but not towards …</a></li>
+    
+    <li><a href="#research-6">Import AI 476: Creativity and RSI; worse…</a></li>
+    
+    <li><a href="#research-7">How well can AI play Slay the Spire? (Sp…</a></li>
+    
+    <li><a href="#research-8">Can AI automate Epoch?</a></li>
+    
+  </ul>
+  
+  <ul>
+    <li><a class="cat-link" href="#econ">Compute, Economics & Geopolitics</a></li>
+    
+    <li><a href="#econ-1">ChinAI #377: American Data Center Hegemo…</a></li>
+    
+  </ul>
+  
+  <ul>
+    <li><a class="cat-link" href="#gov">Governance, Policy & Audio</a></li>
+    
+    <li><a href="#gov-1">Bengio: 'If you prioritize safety, leave…</a></li>
+    
+  </ul>
+  
+</nav>
+
+<main>
+
+<header>
+  <h1>AI Signal Digest</h1>
+  <div class="sub">Week of 2026-10-08 to 2026-10-15 · Generated 2026-10-15</div>
+</header>
+
+<div class="sources-note">
+  <strong>Sources this week</strong>
+  
+  <div class="row">Engineering & Infrastructure: <a href="https://www.latent.space/" target="_blank">Latent Space</a></div>
+  
+  <div class="row">Research & ML Architecture: <a href="https://www.latent.space/" target="_blank">Latent Space</a>, <a href="https://www.interconnects.ai/" target="_blank">Interconnects</a>, <a href="https://importai.substack.com/" target="_blank">Import AI</a>, <a href="https://epoch.ai/blog" target="_blank">Epoch AI</a></div>
+  
+  <div class="row">Compute, Economics & Geopolitics: <a href="https://chinai.substack.com/" target="_blank">ChinAI</a></div>
+  
+  <div class="row">Governance, Policy & Audio: <a href="https://yoshuabengio.org/" target="_blank">Yoshua Bengio</a></div>
+  
+  
+  <div class="row" style="opacity:0.7">Ahead of AI (Sebastian Raschka) had no new entries this window. · Andrej Karpathy's feed had no new entries this window. · Berkeley RDI's only entry was an event ticket-sale announcement (Agentic AI Summit early-bird) — excluded as promotional, not analytical content. · Cosmos Institute's 'You Can't Speedrun Yourself' appears to be a general essay without clear AI-technical content and was excluded for lacking analytical AI substance. · The Batch's only in-window issue (Oct 09) was a vendor product roundup (OpenAI DevDay, Google Gemini 4, Black Forest Labs robotics) — excluded per vendor-announcement rule. · No podcast transcript was provided this run. · Several Epoch AI blog posts shown on the page (chip supply shock, Chinese AI company revenue, ChatGPT usage, coding-agent doubling, EBR-bench, agent capacity) were dated Oct 1-7, outside the Oct 8-15 window, and were excluded.</div>
+  
+</div>
+
+
+<section class="category" id="eng">
+  <h2>Engineering & Infrastructure</h2>
+  
+  <article class="item" id="eng-1">
+    <h3><a href="https://www.latent.space/p/claude-dynamic-workflows" target="_blank">How Anthropic's Dynamic Workflows Coordinate Claude Agents</a></h3>
+    <div class="meta"><a href="https://www.latent.space/" target="_blank">Latent Space</a> · 2026-10-12</div>
+    <p class="why">Why it matters: Describes the actual coordination mechanics Anthropic uses to let multiple Claude agents tackle large projects, which matters for anyone designing multi-agent orchestration rather than single-agent loops.</p>
+    <details class="takeaways">
+      <summary>Key takeaways</summary>
+      <ul>
+        <li>Drawn from an AI Engineer New York talk explicitly borrowing coordination lessons from Unix and Linux process/pipeline design.</li><li>Framed around letting agents handle bigger projects without flooding developers with review overhead.</li><li>Positions 'dynamic workflows' as a structural alternative to static agent pipelines.</li>
+      </ul>
+    </details>
+    
+  </article>
+  
+  <article class="item" id="eng-2">
+    <h3><a href="https://www.latent.space/p/crossing-the-threshold" target="_blank">Crossing the Threshold: How OpenAI and Anthropic Approach Autonomy and Safety in Financial Agents</a></h3>
+    <div class="meta"><a href="https://www.latent.space/" target="_blank">Latent Space</a> · 2026-10-14</div>
+    <p class="why">Why it matters: Lays out concrete design tradeoffs frontier labs are making about which financial-agent decisions get full autonomy versus mandatory human sign-off, which is directly relevant to anyone building agent permission/guardrail systems.</p>
+    <details class="takeaways">
+      <summary>Key takeaways</summary>
+      <ul>
+        <li>Session paired frontier labs (OpenAI, Anthropic) directly with financial firms deploying agents at AI Engineer New York.</li><li>Core tension discussed: granting agents useful autonomy while keeping 'consequential decisions' under explicit human control.</li><li>Useful as a case study in autonomy-tiering rather than binary autonomous/supervised agent design.</li>
+      </ul>
+    </details>
+    
+  </article>
+  
+  <article class="item" id="eng-3">
+    <h3><a href="https://www.latent.space/p/standard-bots" target="_blank">Building AI for Reliable Execution: Lessons From Industrial Robotics (Standard Bots)</a></h3>
+    <div class="meta"><a href="https://www.latent.space/" target="_blank">Latent Space</a> · 2026-10-10</div>
+    <p class="why">Why it matters: Details a concrete production training loop—pretrained models fine-tuned on human demonstrations, then corrected from live deployment failures—that's a reusable pattern for anyone shipping embodied or safety-critical agents.</p>
+    <details class="takeaways">
+      <summary>Key takeaways</summary>
+      <ul>
+        <li>Factory-task models are pretrained then adapted via demonstration data rather than trained from scratch per task.</li><li>Deployment-time corrections are fed back into the model, not just logged as errors.</li><li>Framed around 'reliable execution' as the design goal, distinct from raw capability benchmarks.</li>
+      </ul>
+    </details>
+    
+  </article>
+  
+</section>
+
+<section class="category" id="research">
+  <h2>Research & ML Architecture</h2>
+  
+  <article class="item" id="research-1">
+    <h3><a href="https://www.latent.space/p/biohub-deepmind" target="_blank">Why AlphaFold Didn't Solve Protein Folding</a></h3>
+    <div class="meta"><a href="https://www.latent.space/" target="_blank">Latent Space</a> · 2026-10-10</div>
+    <p class="why">Why it matters: A direct challenge to the Bitter Lesson narrative from people building the systems, arguing scaling alone left real biological understanding gaps—important context for anyone citing AlphaFold as a solved-problem precedent for scaling bets.</p>
+    <details class="takeaways">
+      <summary>Key takeaways</summary>
+      <ul>
+        <li>Guests: Pushmeet Kohli (Google DeepMind) and Sal Candido (Biohub), discussing where scaling-based approaches still fail in biology.</li><li>Explicitly reframes AlphaFold's success against the Bitter Lesson of AI scaling, arguing structure prediction ≠ functional understanding.</li><li>Centers on 'unsolved mysteries' remaining in protein folding despite benchmark-level AlphaFold performance.</li>
+      </ul>
+    </details>
+    
+  </article>
+  
+  <article class="item" id="research-2">
+    <h3><a href="https://www.latent.space/p/lab-in-the-loop-at-compute-speed" target="_blank">Lab-in-the-Loop at Compute Speed — Ian Quigley, Leash Bio</a></h3>
+    <div class="meta"><a href="https://www.latent.space/" target="_blank">Latent Space</a> · 2026-10-14</div>
+    <p class="why">Why it matters: Shows a concrete case where wet-lab assay data (DNA-encoded libraries) was used not just for training but to detect models exploiting shortcuts/cheating, a post-training evaluation mechanic applicable beyond chemistry.</p>
+    <details class="takeaways">
+      <summary>Key takeaways</summary>
+      <ul>
+        <li>Uses DNA-encoded library (DEL) assay data, described as the assay type that 'traumatizes everyone' in the field, as a ground-truth signal.</li><li>That same dataset was used to catch models cheating rather than genuinely solving the task.</li><li>Argued as a template for training agents to reason 'like chemists' rather than pattern-match on binding data.</li>
+      </ul>
+    </details>
+    
+  </article>
+  
+  <article class="item" id="research-3">
+    <h3><a href="https://www.latent.space/p/dyna" target="_blank">Dyna-2: General Purpose Physical Agents with Hour-Long Autonomy — Jason Ma, Dyna Robotics</a></h3>
+    <div class="meta"><a href="https://www.latent.space/" target="_blank">Latent Space</a> · 2026-10-13</div>
+    <p class="why">Why it matters: Introduces World Action Models as Dyna's architectural bet for extending robot autonomy from short task windows to hour-long operation, a concrete claim about what architecture class is needed for physical-AI duration scaling.</p>
+    <details class="takeaways">
+      <summary>Key takeaways</summary>
+      <ul>
+        <li>Guest Jason Ma is Dyna Robotics' Chief Scientist, discussing World Action Models as the core architecture.</li><li>Central claim: hour-long autonomous operation, a large jump from typical short-horizon robot policies.</li><li>Framed as the 'next frontier of Physical AI' rather than an incremental robotics demo.</li>
+      </ul>
+    </details>
+    
+  </article>
+  
+  <article class="item" id="research-4">
+    <h3><a href="https://www.latent.space/p/periodic" target="_blank">Synthesis Superintelligence: from Semiconductors to Superconductors — Periodic Labs' Liam Fedus and Ekin Dogus Cubuk</a></h3>
+    <div class="meta"><a href="https://www.latent.space/" target="_blank">Latent Space</a> · 2026-10-08</div>
+    <p class="why">Why it matters: Discusses applying AI-driven discovery pipelines across materials classes (semiconductors to superconductors), relevant to engineers evaluating whether foundation-model-style approaches generalize to hard science discovery loops.</p>
+    <details class="takeaways">
+      <summary>Key takeaways</summary>
+      <ul>
+        <li>Guests Liam Fedus and Ekin Dogus Cubuk discuss Periodic Labs' approach to AI-driven materials/superconductor discovery.</li><li>Billed as a crossover between a 'Science pod' and 'Engineering pod' format, plus a forward-deployed-engineering segment.</li><li>Positions superconductor research as the next target after semiconductor-scale AI discovery work.</li>
+      </ul>
+    </details>
+    
+  </article>
+  
+  <article class="item" id="research-5">
+    <h3><a href="https://www.interconnects.ai/p/i-expect-rapid-progress-but-not-towards" target="_blank">I expect rapid progress but not towards general superintelligence</a></h3>
+    <div class="meta"><a href="https://www.interconnects.ai/" target="_blank">Interconnects</a> · 2026-10-09</div>
+    <p class="why">Why it matters: A direct architectural/trajectory critique of the 'AI will surpass humans at my job soon' claims common among top industry researchers, useful for calibrating near-term capability forecasts against hype.</p>
+    <details class="takeaways">
+      <summary>Key takeaways</summary>
+      <ul>
+        <li>Author states being repeatedly surprised that top industry researchers expect AI to outperform them at their own jobs within a few years.</li><li>Explicitly separates 'rapid progress' from a trajectory toward 'general superintelligence' — arguing these are not the same claim.</li><li>Functions as a counterpoint to scaling-maximalist narratives circulating from lab researchers.</li>
+      </ul>
+    </details>
+    
+  </article>
+  
+  <article class="item" id="research-6">
+    <h3><a href="https://importai.substack.com/p/import-ai-476-creativity-and-rsi" target="_blank">Import AI 476: Creativity and RSI; worse-than-China open weight models; AI goes to space</a></h3>
+    <div class="meta"><a href="https://importai.substack.com/" target="_blank">Import AI</a> · 2026-10-12</div>
+    <p class="why">Why it matters: Covers recursive self-improvement (RSI) dynamics and a comparative claim that current open-weight models lag Chinese counterparts — both load-bearing for anyone tracking open-model competitiveness and self-improvement risk.</p>
+    <details class="takeaways">
+      <summary>Key takeaways</summary>
+      <ul>
+        <li>Addresses 'Creativity and RSI' — recursive self-improvement — as a distinct research thread from general capability gains.</li><li>Flags Western open-weight models as currently 'worse-than-China,' a direct competitiveness claim rather than a product pitch.</li><li>Also covers AI deployment extending into space-based applications.</li>
+      </ul>
+    </details>
+    
+  </article>
+  
+  <article class="item" id="research-7">
+    <h3><a href="https://epoch.ai/blog" target="_blank">How well can AI play Slay the Spire? (SpireClimb benchmark)</a></h3>
+    <div class="meta"><a href="https://epoch.ai/blog" target="_blank">Epoch AI</a> · 2026-10-14</div>
+    <p class="why">Why it matters: An independent benchmark showing a sharp capability jump on a long-horizon strategy game, giving engineers a concrete, hard-to-game data point on reasoning/planning progress over just months.</p>
+    <details class="takeaways">
+      <summary>Key takeaways</summary>
+      <ul>
+        <li>New SpireClimb benchmark: frontier models now win 90%+ at the easiest difficulty, up from barely winning months ago.</li><li>At the hardest difficulty setting, win rate is only up to 20% — showing the capability ceiling is still far off.</li><li>Authored by Benjamin Ou and Simon Chen as part of Epoch AI's independent benchmarking work.</li>
+      </ul>
+    </details>
+    
+  </article>
+  
+  <article class="item" id="research-8">
+    <h3><a href="https://epoch.ai/blog" target="_blank">Can AI automate Epoch?</a></h3>
+    <div class="meta"><a href="https://epoch.ai/blog" target="_blank">Epoch AI</a> · 2026-10-08</div>
+    <p class="why">Why it matters: A rare self-directed automation audit where a research org grades models against its own actual work rather than a synthetic benchmark, giving a grounded read on real open-ended task automation limits.</p>
+    <details class="takeaways">
+      <summary>Key takeaways</summary>
+      <ul>
+        <li>Uses Epoch AI's own 'Automation Reports': realistic, open-ended tasks pulled directly from their research work.</li><li>Tasks are manually graded against Epoch's own internal standards, not auto-scored.</li><li>Finding: frontier models handle well-defined tasks reliably but fail on the open-ended aspects blocking full work automation.</li>
+      </ul>
+    </details>
+    
+  </article>
+  
+</section>
+
+<section class="category" id="econ">
+  <h2>Compute, Economics & Geopolitics</h2>
+  
+  <article class="item" id="econ-1">
+    <h3><a href="https://chinai.substack.com/p/chinai-377-us-dominance-of-the-center" target="_blank">ChinAI #377: American Data Center Hegemony - the Center-Satellite Structure</a></h3>
+    <div class="meta"><a href="https://chinai.substack.com/" target="_blank">ChinAI</a> · 2026-10-12</div>
+    <p class="why">Why it matters: Analyzes the structural pattern of US dominance over global compute buildout, directly relevant to anyone modeling compute access, supply chains, or geopolitical constraints on frontier training runs.</p>
+    <details class="takeaways">
+      <summary>Key takeaways</summary>
+      <ul>
+        <li>Frames US data-center dominance as a 'center-satellite structure' rather than simple raw-capacity leadership.</li><li>Positions this structural control as a distinct geopolitical lever from chip export controls alone.</li>
+      </ul>
+    </details>
+    
+  </article>
+  
+</section>
+
+<section class="category" id="gov">
+  <h2>Governance, Policy & Audio</h2>
+  
+  <article class="item" id="gov-1">
+    <h3><a href="https://yoshuabengio.org/en/blog/bengio-if-you-prioritize-safety-leave-frontier-ai-companies" target="_blank">Bengio: 'If you prioritize safety, leave frontier AI companies'</a></h3>
+    <div class="meta"><a href="https://yoshuabengio.org/" target="_blank">Yoshua Bengio</a> · 2026-10-08</div>
+    <p class="why">Why it matters: A pointed policy critique from a leading safety researcher arguing that staying inside frontier labs may be incompatible with genuinely prioritizing safety — a direct challenge to the 'change it from the inside' justification common among lab researchers.</p>
+    <details class="takeaways">
+      <summary>Key takeaways</summary>
+      <ul>
+        <li>Originally an op-ed for Transformer, explicitly invites frontier-lab employees to question whether their work advances safety.</li><li>Argues reflection on this question is hard but urgent, stating 'we no longer have the luxury of time.'</li><li>Frames the choice as binary: prioritize safety by leaving, rather than reforming from within.</li>
+      </ul>
+    </details>
+    
+  </article>
+  
+</section>
+
+
+<footer>
+  Generated automatically by the weekly digest pipeline (2026-10-15).
+</footer>
+
+</main>
+</div>
+
+<script>
+  var body = document.body, toggle = document.getElementById('tocToggle'), overlay = document.getElementById('tocOverlay');
+  function closeToc() { body.classList.remove('toc-open'); }
+  toggle.addEventListener('click', function () { body.classList.toggle('toc-open'); });
+  overlay.addEventListener('click', closeToc);
+  document.querySelectorAll('nav.toc a').forEach(function (a) { a.addEventListener('click', closeToc); });
+</script>
+</body>
+</html>
