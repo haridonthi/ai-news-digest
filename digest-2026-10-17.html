@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Signal Digest — 2026-10-17</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --panel: #171a21;
+    --border: #262b36;
+    --text: #e6e8ec;
+    --muted: #9aa2b1;
+    --accent: #7dd3fc;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+  }
+  .layout { display: flex; max-width: 1080px; margin: 0 auto; }
+  nav.toc {
+    width: 220px; flex-shrink: 0; padding: 40px 16px 40px 20px;
+    position: sticky; top: 0; align-self: flex-start; height: 100vh; overflow-y: auto;
+  }
+  nav.toc h4 { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin: 0 0 10px; }
+  nav.toc ul { list-style: none; margin: 0 0 20px; padding: 0; }
+  nav.toc li { margin-bottom: 6px; }
+  nav.toc a { color: var(--muted); text-decoration: none; font-size: 0.84rem; }
+  nav.toc a:hover { color: var(--accent); }
+  nav.toc .cat-link { color: var(--text); font-weight: 600; }
+  main { flex: 1; padding: 40px 20px 60px; min-width: 0; }
+  header h1 { font-size: 1.6rem; margin: 0 0 4px; }
+  header .sub { color: var(--muted); font-size: 0.9rem; }
+
+  .sources-note {
+    margin: 20px 0 36px; padding: 14px 16px; background: var(--panel);
+    border: 1px solid var(--border); border-radius: 10px; font-size: 0.82rem; color: var(--muted);
+  }
+  .sources-note strong { color: var(--text); font-weight: 600; }
+  .sources-note .row { margin-top: 4px; }
+  .sources-note a { color: var(--muted); }
+  .sources-note a:hover { color: var(--accent); }
+
+  section.category { margin-bottom: 40px; scroll-margin-top: 20px; }
+  section.category h2 {
+    font-size: 1.05rem; text-transform: uppercase; letter-spacing: 0.04em;
+    color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 8px;
+  }
+  article.item { padding: 16px 0; border-bottom: 1px solid var(--border); scroll-margin-top: 20px; }
+  article.item:last-child { border-bottom: none; }
+  article.item h3 { margin: 0 0 6px; font-size: 1.02rem; }
+  article.item h3 a { color: var(--text); text-decoration: none; }
+  article.item h3 a:hover { color: var(--accent); }
+  article.item .meta { font-size: 0.78rem; color: var(--muted); margin-bottom: 8px; }
+  article.item .meta a { color: var(--muted); }
+  article.item .meta a:hover { color: var(--accent); }
+  article.item p.why { margin: 0 0 10px; font-size: 0.94rem; color: var(--muted); font-style: italic; }
+  details.takeaways { margin-top: 6px; }
+  details.takeaways summary {
+    cursor: pointer; font-size: 0.86rem; color: var(--accent); list-style: none;
+  }
+  details.takeaways summary::before { content: "▸ "; }
+  details.takeaways[open] summary::before { content: "▾ "; }
+  details.takeaways ul { margin: 8px 0 0; padding-left: 20px; font-size: 0.92rem; }
+  details.takeaways li { margin-bottom: 6px; }
+  .empty-note { color: var(--muted); font-size: 0.88rem; font-style: italic; }
+  footer {
+    margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--border);
+    font-size: 0.76rem; color: var(--muted);
+  }
+
+  /* --- Mobile: TOC becomes an off-canvas panel behind a hamburger button --- */
+  .hamburger {
+    display: none;
+    position: fixed; top: 14px; left: 14px; z-index: 50;
+    width: 40px; height: 40px; border-radius: 8px;
+    background: var(--panel); border: 1px solid var(--border);
+    color: var(--text); font-size: 1.1rem; line-height: 1;
+    align-items: center; justify-content: center;
+  }
+  .toc-overlay {
+    display: none;
+    position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 39;
+  }
+  @media (max-width: 768px) {
+    .hamburger { display: flex; }
+    nav.toc {
+      position: fixed; top: 0; left: 0; height: 100vh; width: 260px;
+      background: var(--bg); border-right: 1px solid var(--border);
+      padding: 70px 16px 20px 20px; z-index: 40;
+      transform: translateX(-100%); transition: transform 0.2s ease;
+    }
+    body.toc-open nav.toc { transform: translateX(0); }
+    body.toc-open .toc-overlay { display: block; }
+    main { padding-top: 64px; }
+  }
+</style>
+</head>
+<body>
+
+<button class="hamburger" id="tocToggle" aria-label="Toggle table of contents">☰</button>
+<div class="toc-overlay" id="tocOverlay"></div>
+
+<div class="layout">
+
+<nav class="toc" id="toc">
+  <h4>Contents</h4>
+  
+  <ul>
+    <li><a class="cat-link" href="#eng">Engineering & Infrastructure</a></li>
+    
+    <li><a href="#eng-1">Dyna-2: General Purpose Physical Agents …</a></li>
+    
+    <li><a href="#eng-2">How Anthropic’s Dynamic Workflows Coordi…</a></li>
+    
+  </ul>
+  
+  <ul>
+    <li><a class="cat-link" href="#research">Research & ML Architecture</a></li>
+    
+    <li><a href="#research-1">Agents Disprove Polysemanticity; Greatly…</a></li>
+    
+    <li><a href="#research-2">Lab-in-the-Loop at Compute Speed</a></li>
+    
+    <li><a href="#research-3">Meta Shakes Up the Frontiers, Open and C…</a></li>
+    
+    <li><a href="#research-4">Who Needs Verifiable Rewards?</a></li>
+    
+    <li><a href="#research-5">Open-Weight Models Trail Closed Models i…</a></li>
+    
+    <li><a href="#research-6">AI Systems Are Improving Rapidly at Slay…</a></li>
+    
+    <li><a href="#research-7">Podcasts About the Topic</a></li>
+    
+  </ul>
+  
+  <ul>
+    <li><a class="cat-link" href="#econ">Compute, Economics & Geopolitics</a></li>
+    
+    <li><a href="#econ-1">American Data Center Hegemony: The Cente…</a></li>
+    
+    <li><a href="#econ-2">Import AI 476: Creativity and RSI; Worse…</a></li>
+    
+  </ul>
+  
+  <ul>
+    <li><a class="cat-link" href="#gov">Governance, Policy & Audio</a></li>
+    
+    <li><a href="#gov-1">Crossing the Threshold: How OpenAI and A…</a></li>
+    
+  </ul>
+  
+</nav>
+
+<main>
+
+<header>
+  <h1>AI Signal Digest</h1>
+  <div class="sub">Week of 2026-10-10 to 2026-10-17 · Generated 2026-10-17</div>
+</header>
+
+<div class="sources-note">
+  <strong>Sources this week</strong>
+  
+  <div class="row">Engineering & Infrastructure: <a href="https://www.latent.space/" target="_blank">Latent Space</a></div>
+  
+  <div class="row">Research & ML Architecture: <a href="https://www.latent.space/" target="_blank">Latent Space</a>, <a href="https://www.interconnects.ai/" target="_blank">Interconnects</a>, <a href="https://blog.cosmos-institute.org/" target="_blank">Cosmos Institute</a>, <a href="https://epoch.ai/" target="_blank">Epoch AI</a>, <a href="https://scottaaronson.blog/" target="_blank">Shtetl-Optimized (Scott Aaronson)</a></div>
+  
+  <div class="row">Compute, Economics & Geopolitics: <a href="https://chinai.substack.com/" target="_blank">ChinAI</a>, <a href="https://importai.substack.com/" target="_blank">Import AI</a></div>
+  
+  <div class="row">Governance, Policy & Audio: <a href="https://www.latent.space/" target="_blank">Latent Space</a></div>
+  
+  
+  <div class="row" style="opacity:0.7">Ahead of AI: no RSS entries this run. · Andrej Karpathy: no RSS entries this run. · Yoshua Bengio: no RSS entries this run.</div>
+  
+</div>
+
+
+<section class="category" id="eng">
+  <h2>Engineering & Infrastructure</h2>
+  
+  <article class="item" id="eng-1">
+    <h3><a href="https://www.latent.space/p/dyna" target="_blank">Dyna-2: General Purpose Physical Agents with Hour-Long Autonomy</a></h3>
+    <div class="meta"><a href="https://www.latent.space/" target="_blank">Latent Space</a> · 2026-10-13</div>
+    <p class="why">Why it matters: Hour-long autonomy and World Action Models point to a path for building physical agents that must sustain behavior beyond short, scripted tasks.</p>
+    <details class="takeaways">
+      <summary>Key takeaways</summary>
+      <ul>
+        <li>Dyna-2 is described as a general-purpose physical agent with hour-long autonomy.</li><li>Dyna Robotics’ Chief Scientist presents World Action Models as the company’s bet on the next frontier of physical AI.</li>
+      </ul>
+    </details>
+    
+  </article>
+  
+  <article class="item" id="eng-2">
+    <h3><a href="https://www.latent.space/p/claude-dynamic-workflows" target="_blank">How Anthropic’s Dynamic Workflows Coordinate Claude Agents</a></h3>
+    <div class="meta"><a href="https://www.latent.space/" target="_blank">Latent Space</a> · 2026-10-12</div>
+    <p class="why">Why it matters: The workflow design addresses a practical scaling problem: coordinating agents on larger projects without overwhelming developers.</p>
+    <details class="takeaways">
+      <summary>Key takeaways</summary>
+      <ul>
+        <li>Anthropic draws on lessons from Unix and Linux to explain its approach to agent workflows.</li><li>The stated goal is to let agents tackle bigger projects while keeping the experience manageable for developers.</li>
+      </ul>
+    </details>
+    
+  </article>
+  
+</section>
+
+<section class="category" id="research">
+  <h2>Research & ML Architecture</h2>
+  
+  <article class="item" id="research-1">
+    <h3><a href="https://www.latent.space/p/ainews-agents-disprove-polysemanticity" target="_blank">Agents Disprove Polysemanticity; Greatly Improve Interpretability & Alignment</a></h3>
+    <div class="meta"><a href="https://www.latent.space/" target="_blank">Latent Space</a> · 2026-10-16</div>
+    <p class="why">Why it matters: If agent-based methods can expose features that appear polysemantic, they could change how researchers investigate model internals and alignment.</p>
+    <details class="takeaways">
+      <summary>Key takeaways</summary>
+      <ul>
+        <li>The article highlights Nick Cammarata’s claim that agents disprove polysemanticity.</li><li>It also reports that agents greatly improve interpretability and alignment.</li>
+      </ul>
+    </details>
+    
+  </article>
+  
+  <article class="item" id="research-2">
+    <h3><a href="https://www.latent.space/p/lab-in-the-loop-at-compute-speed" target="_blank">Lab-in-the-Loop at Compute Speed</a></h3>
+    <div class="meta"><a href="https://www.latent.space/" target="_blank">Latent Space</a> · 2026-10-14</div>
+    <p class="why">Why it matters: The account connects high-throughput experimental data to model evaluation and agent training, illustrating how laboratory workflows can inform both.</p>
+    <details class="takeaways">
+      <summary>Key takeaways</summary>
+      <ul>
+        <li>Leash Bio describes working with DNA-encoded libraries (DELs), an assay the summary says is difficult to handle.</li><li>The team used assay data to catch models cheating and argues that the same data can help agents learn to reason like chemists.</li>
+      </ul>
+    </details>
+    
+  </article>
+  
+  <article class="item" id="research-3">
+    <h3><a href="https://www.interconnects.ai/p/meta-shakes-up-the-frontiers-open" target="_blank">Meta Shakes Up the Frontiers, Open and Closed</a></h3>
+    <div class="meta"><a href="https://www.interconnects.ai/" target="_blank">Interconnects</a> · 2026-10-17</div>
+    <p class="why">Why it matters: The analysis frames recent changes in the model landscape as relevant to researchers deciding how open-weight and closed systems compare.</p>
+    <details class="takeaways">
+      <summary>Key takeaways</summary>
+      <ul>
+        <li>The article describes Meta as shaking up both the open and closed frontiers.</li><li>Its summary argues that “US open weights are back!”</li>
+      </ul>
+    </details>
+    
+  </article>
+  
+  <article class="item" id="research-4">
+    <h3><a href="https://blog.cosmos-institute.org/p/verification-is-all-you-need" target="_blank">Who Needs Verifiable Rewards?</a></h3>
+    <div class="meta"><a href="https://blog.cosmos-institute.org/" target="_blank">Cosmos Institute</a> · 2026-10-16</div>
+    <p class="why">Why it matters: The question of whether frontier systems need verifiable rewards bears directly on how researchers design learning signals when outcomes are difficult to check automatically.</p>
+    <details class="takeaways">
+      <summary>Key takeaways</summary>
+      <ul>
+        <li>The piece asks whether frontier progress requires verifiable rewards.</li><li>Its summary frames the topic as “conjecture and refutation at the frontier.”</li>
+      </ul>
+    </details>
+    
+  </article>
+  
+  <article class="item" id="research-5">
+    <h3><a href="https://epoch.ai/blog" target="_blank">Open-Weight Models Trail Closed Models in Cyber Capabilities by 6–7 Months</a></h3>
+    <div class="meta"><a href="https://epoch.ai/" target="_blank">Epoch AI</a> · 2026-10-16</div>
+    <p class="why">Why it matters: The benchmark gives researchers a quantified estimate of the cyber-capability gap between open- and closed-weight models.</p>
+    <details class="takeaways">
+      <summary>Key takeaways</summary>
+      <ul>
+        <li>Epoch’s Cyber ECI identifies Z.ai’s GLM-5.3 as the top open-weight model.</li><li>Epoch estimates GLM-5.3 scores at the level of closed-weight models from 6–7 months earlier.</li>
+      </ul>
+    </details>
+    
+  </article>
+  
+  <article class="item" id="research-6">
+    <h3><a href="https://epoch.ai/blog" target="_blank">AI Systems Are Improving Rapidly at Slay the Spire and Its Sequel</a></h3>
+    <div class="meta"><a href="https://epoch.ai/" target="_blank">Epoch AI</a> · 2026-10-14</div>
+    <p class="why">Why it matters: The SpireClimb results show how quickly model performance can move on interactive tasks, while exposing a large remaining gap at higher difficulty.</p>
+    <details class="takeaways">
+      <summary>Key takeaways</summary>
+      <ul>
+        <li>Frontier models now win more than 90% of games at the easiest setting.</li><li>At the hardest setting, they win up to 20%; months earlier, models could barely beat Slay the Spire.</li>
+      </ul>
+    </details>
+    
+  </article>
+  
+  <article class="item" id="research-7">
+    <h3><a href="https://scottaaronson.blog/?p=10201" target="_blank">Podcasts About the Topic</a></h3>
+    <div class="meta"><a href="https://scottaaronson.blog/" target="_blank">Shtetl-Optimized (Scott Aaronson)</a> · 2026-10-13</div>
+    <p class="why">Why it matters: The discussion links claims about AI-discovered algorithms to questions in complexity theory, giving researchers a useful lens for assessing what such results might imply.</p>
+    <details class="takeaways">
+      <summary>Key takeaways</summary>
+      <ul>
+        <li>The post describes “the Topic” as the Mathocalypse, with discussion also touching on AI alignment, quantum computing, and complexity theory.</li><li>Aaronson notes his live reaction to news that an Anthropic model found algorithms for 3SUM.</li>
+      </ul>
+    </details>
+    
+    <details class="takeaways">
+      <summary>Note on transcript</summary>
+      <ul><li>No podcast transcript was included in the ingested data; takeaways are limited to the RSS excerpt.</li></ul>
+    </details>
+    
+  </article>
+  
+</section>
+
+<section class="category" id="econ">
+  <h2>Compute, Economics & Geopolitics</h2>
+  
+  <article class="item" id="econ-1">
+    <h3><a href="https://chinai.substack.com/p/chinai-377-us-dominance-of-the-center" target="_blank">American Data Center Hegemony: The Center-Satellite Structure</a></h3>
+    <div class="meta"><a href="https://chinai.substack.com/" target="_blank">ChinAI</a> · 2026-10-12</div>
+    <p class="why">Why it matters: The center-satellite framing offers a geopolitical lens for analyzing where data-center capacity concentrates and how that concentration shapes AI infrastructure.</p>
+    <details class="takeaways">
+      <summary>Key takeaways</summary>
+      <ul>
+        <li>The issue examines American data-center hegemony.</li><li>It uses a “center-satellite structure” to frame that concentration.</li>
+      </ul>
+    </details>
+    
+  </article>
+  
+  <article class="item" id="econ-2">
+    <h3><a href="https://importai.substack.com/p/import-ai-476-creativity-and-rsi" target="_blank">Import AI 476: Creativity and RSI; Worse-Than-China Open-Weight Models; AI Goes to Space</a></h3>
+    <div class="meta"><a href="https://importai.substack.com/" target="_blank">Import AI</a> · 2026-10-12</div>
+    <p class="why">Why it matters: The issue brings together model capability, open-weight competitiveness, and space applications—three areas that affect research priorities and infrastructure planning.</p>
+    <details class="takeaways">
+      <summary>Key takeaways</summary>
+      <ul>
+        <li>The issue covers creativity and recursive self-improvement (RSI).</li><li>Its headline flags open-weight models described as “worse-than-China.”</li><li>It also covers AI applications in space.</li>
+      </ul>
+    </details>
+    
+  </article>
+  
+</section>
+
+<section class="category" id="gov">
+  <h2>Governance, Policy & Audio</h2>
+  
+  <article class="item" id="gov-1">
+    <h3><a href="https://www.latent.space/p/crossing-the-threshold" target="_blank">Crossing the Threshold: How OpenAI and Anthropic Approach Autonomy and Safety in Financial Agents</a></h3>
+    <div class="meta"><a href="https://www.latent.space/" target="_blank">Latent Space</a> · 2026-10-14</div>
+    <p class="why">Why it matters: Financial agents make the autonomy-versus-oversight tradeoff concrete because their consequential decisions need to remain under control.</p>
+    <details class="takeaways">
+      <summary>Key takeaways</summary>
+      <ul>
+        <li>Frontier labs and financial firms discussed the issue at AI Engineer New York.</li><li>The central challenge was how to give agents useful autonomy while keeping consequential decisions controlled.</li>
+      </ul>
+    </details>
+    
+  </article>
+  
+</section>
+
+
+<footer>
+  Generated automatically by the weekly digest pipeline (2026-10-17).
+</footer>
+
+</main>
+</div>
+
+<script>
+  var body = document.body, toggle = document.getElementById('tocToggle'), overlay = document.getElementById('tocOverlay');
+  function closeToc() { body.classList.remove('toc-open'); }
+  toggle.addEventListener('click', function () { body.classList.toggle('toc-open'); });
+  overlay.addEventListener('click', closeToc);
+  document.querySelectorAll('nav.toc a').forEach(function (a) { a.addEventListener('click', closeToc); });
+</script>
+</body>
+</html>
